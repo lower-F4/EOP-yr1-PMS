@@ -13,6 +13,12 @@ public class PMSMain {
         - 
         */              
     }
+
+    //TODO greetings():
+    /*
+    - Make a stands out ASCII art upon program startup.
+    */
+
     //TODO query():
     /*
     -  to ask for user the option of each operation methods.
