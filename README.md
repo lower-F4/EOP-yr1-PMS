@@ -39,7 +39,7 @@ and so on...
 
 so the general structure in our program there will be a
 main method in which there will be a 
-greetings(); method that will be displayed upon startup of the program. 
+`greetings();` method that will be displayed upon startup of the program. 
 There's also :
 
 ```java
@@ -49,7 +49,7 @@ while(opt != 'q') {
 }
 ```
 So this program will continue to run until user input a certain character or word.
-in our query(); method it will ask the user for to choose 4 operation:
+in our `query();` method it will ask the user for to choose 4 operation:
 
 - `insert();` which will insert the data into the table
 
@@ -63,3 +63,23 @@ all of this operation are a method.
 
 We also considered a `save();` and `read();` operation to save the data from array to a .txt file.
 But that's still in experiment, I'll say something if we are to proceed with it.
+
+### Tasks
+
+- Programming
+
+`Insert();` - harits
+`view();` - mansaa
+`update();` - 
+`delete();` - Haddif
+`query();`  harits
+`save();` - Farees 
+`read();` - Farees
+`greetings();` - Farees
+
+- Decide column attributes
+  - vacant
+- Make a flowchart
+  - vacant
+- Slide presentation
+  - vacant
