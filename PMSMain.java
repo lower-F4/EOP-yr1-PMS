@@ -86,7 +86,7 @@ public class PMSMain {
 
                 break; 
             case "view": 
-
+                view(ptid, ptname, disease, docid);
                 break; 
 
             case "delete":
@@ -126,18 +126,18 @@ public class PMSMain {
             System.out.println( (i+1) + ". " + ptname[i]);
         }
         System.out.println( (ptid.length+1) + ". " + "VIEW ALL PATIENTS");
+        
         int viewname = input.nextInt();
-
-        int loopname = viewname - 1;
 
         System.out.println("Patient ID    Patient Name    Disease    Doctor ID");
         System.out.println("---------------------------------------------------");
         
         if (viewname > 0 && viewname != (ptid.length+1))
-            System.out.printf("%-10f    %-11s    %-7s    %-9f\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
+            int loopname = viewname - 1;
+            System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
         else if (viewname == (ptid.length+1))
             for (int i = 0 ; i < ptid.length ; i++)
-                    System.out.printf("%-10f    %-11s    %-7s    %-9f\n", ptid[i],ptname[i],disease[i],docid[i]);
+                    System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[i],ptname[i],disease[i],docid[i]);
     }
 
     //TODO INSERT(); 
