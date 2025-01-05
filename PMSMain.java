@@ -4,6 +4,12 @@
 */
 import java.util.Scanner;
 import java.lang.System; 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class PMSMain {
     public static void main(String[] args) {
@@ -14,8 +20,28 @@ public class PMSMain {
         - 
         */
 
+        //-------------------------TEST DATA--------------------------------------
+        int[] ptid = {
+            100, 101, 102,
+            103, 104, 105
+        }; 
+        String[] ptname = {
+            "Saiful", "Ahmad", "Hanif",
+            "Syamsol", "Badrul", "Qistina"
+        }; 
+        String[] disease = {
+            "Diabetes", "High blood pressure", "Heart attack",
+            "Heart broken", "Broken leg", "Accident"
+        }; 
+        int[] docid = {
+            1000, 1001, 1002, 
+            1003, 1004, 1005
+        }; 
+        //-------------------------TEST DATA--------------------------------------
+        
+        greetings();
         while(true) {
-            query(); 
+            query(ptid, ptname, disease, docid); 
         }
 
     }
@@ -43,7 +69,7 @@ public class PMSMain {
     -  to ask for user the option of each operation methods.
     - redirect user option into a specific method.
     */
-    public static void query() {
+    public static void query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
         String input; 
         Scanner query = new Scanner(System.in); 
@@ -66,8 +92,19 @@ public class PMSMain {
             case "delete":
         
                 break; 
+            case "save":
+                save(ptid, ptname, disease, docid); 
+                break;
+            case "read":
+                try {
+                    read();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } 
+                break;
             case "exit":
-                System.out.println("Exiting... Thank You for using Patient Management System.")
+                System.out.println("Exiting... Thank You for using Patient Management System.");
                 System.exit(0); 
             default:
                 System.out.println("Please enter a valid command.");
@@ -111,5 +148,44 @@ public class PMSMain {
 
     //TODO SAVE(); 
 
+    public static void save(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+        
+        try {
+            BufferedWriter savedata = new BufferedWriter(new FileWriter("Data.txt"));
+
+            for(int i = 0;i < ptid.length; i++) {
+                savedata.write(ptid[i] + "\t");
+                savedata.write(ptname[i] + "\t"); 
+                savedata.write(disease[i] + "\t"); 
+                savedata.write(docid[i] + "\t"); 
+                savedata.write("\n");
+            }
+            savedata.close();
+            System.out.println("Data saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+        
+    }
+
     //TODO READ(); 
+
+    public static void read() throws IOException {
+
+        //Using bufferedReader
+        try {
+            BufferedReader readdata = new BufferedReader(new FileReader("Data.txt"));
+            //TODO while loop reading data, categorize each into array.
+            String st = readdata.readLine();
+
+            System.out.println(st); 
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } 
+
+        //using scanner
+
+
+    }
 }

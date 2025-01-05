@@ -1,0 +1,6 @@
+100	Saiful	Diabetes	1000	
+101	Ahmad	High blood pressure	1001	
+102	Hanif	Heart attack	1002	
+103	Syamsol	Heart broken	1003	
+104	Badrul	Broken leg	1004	
+105	Qistina	Accident	1005	
