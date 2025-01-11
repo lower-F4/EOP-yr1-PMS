@@ -169,7 +169,7 @@ public class PMSMain {
 
         //to copy old data into the new array
 
-        for (int i = 0; ptid.lentgth; i++)
+        for (int i = 0; ptid.length; i++)
         {
             newptIdArray[i] = ptid[i];
             newPtNameArray[i] = ptname[i] ;
