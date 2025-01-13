@@ -82,24 +82,29 @@ public class PMSMain {
         input = query.nextLine(); 
         input = input.toLowerCase(); 
 
+        System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
+        System.out.print("What do you wish to do: ")
+        
+
         switch (input) {
-            case "insert":
+            case 1: String insertedpatientlist = insert(ptid, ptname, disease, docid);
+                System.out.println(insertedpatientlist);
                 
                 break;
-            case "update":
+            case 2: update();
 
                 break; 
-            case "view": 
-
+            case 3: 
+                view(ptid, ptname, disease, docid);
                 break; 
 
-            case "delete":
+            case 4: delete();
         
                 break; 
-            case "save":
+            case 5:
                 save(ptid, ptname, disease, docid); 
                 break;
-            case "read":
+            case 6:
                 try {
                     read(ptid, ptname, disease, docid);
                 } catch (IOException e) {
@@ -107,7 +112,7 @@ public class PMSMain {
                     e.printStackTrace();
                 } 
                 break;
-            case "exit":
+            case 7:
                 System.out.println("Exiting... Thank You for using Patient Management System.");
                 System.exit(0); 
             default:
@@ -130,20 +135,86 @@ public class PMSMain {
             System.out.println( (i+1) + ". " + ptname[i]);
         }
         System.out.println( (ptid.length+1) + ". " + "VIEW ALL PATIENTS");
+        
         int viewname = input.nextInt();
-
-        int loopname = viewname - 1;
 
         System.out.println("Patient ID    Patient Name    Disease    Doctor ID");
         System.out.println("---------------------------------------------------");
         
         if (viewname > 0 && viewname != (ptid.length+1))
-            System.out.printf("%-10f    %-11s    %-7s    %-9f\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
+            int loopname = viewname - 1;
+            System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
         else if (viewname == (ptid.length+1))
             for (int i = 0 ; i < ptid.length ; i++)
-                    System.out.printf("%-10f    %-11s    %-7s    %-9f\n", ptid[i],ptname[i],disease[i],docid[i]);
+                    System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[i],ptname[i],disease[i],docid[i]);
     }
 
+    //TODO INSERT(); Harits' 
+
+    public static String insert(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+        Scanner input = new Scanner(System.in);
+    
+        // Prompt for new patient details
+        System.out.println("Enter new patient ID: ");
+        int newPtId = input.nextInt();
+    
+        input.nextLine(); // Consume newline character
+        System.out.println("Enter new patient name: ");
+        String newPtName = input.nextLine();
+    
+        System.out.println("Enter disease: ");
+        String newDisease = input.nextLine();
+    
+        System.out.println("Enter doctor ID: ");
+        int newDocId = input.nextInt();
+    
+        //Add new details/data into the arrays
+
+        int[] newPtIdArray = new int[ptid.length + 1];
+        String[] newPtNameArray = new String[ptname.length + 1];
+        String[] newDiseaseArray = new String[disease.length + 1];
+        int[] newDocIdArray = new int[docid.length + 1];
+
+        //to copy old data into the new array
+
+        for (int i = 0; ptid.length; i++)
+        {
+            newptIdArray[i] = ptid[i];
+            newPtNameArray[i] = ptname[i] ;
+            newDiseaseArray[i] = disease[i];
+            newDocIdArray[i] = docid[i];
+        }
+        
+        // Add new data to the last position of the arrays
+    newPtIdArray[ptid.length] = newPtId;
+    newPtNameArray[ptname.length] = newPtName;
+    newDiseaseArray[disease.length] = newDisease;
+    newDocIdArray[docid.length] = newDocId;
+
+    // Assign the new arrays back to the existing variables
+    ptid = newPtIdArray;
+    ptname = newPtNameArray;
+    disease = newDiseaseArray;
+    docid = newDocIdArray;
+
+    // Construct the updated patient list using string concatenation
+    String insertedPatientList = "Updated Patient List:\n";
+    insertedPatientList += "Patient ID    Patient Name    Disease    Doctor ID\n";
+    insertedPatientList += "---------------------------------------------------\n";
+    for (int i = 0; i < ptid.length; i++) {
+        insertedPatientList += String.format("%-10d    %-13s    %-8s    %-9d\n", ptid[i], ptname[i], disease[i], docid[i]);
+    }
+
+    System.out.println("New patient details added successfully.");
+    return insertedPatientList; // Return the updated patient list
+}
+
+
+
+
+    //TODO UPDATE(): 
+
+    //TODO DELETE(); 
 
 
     public static void save(int[] ptid, String[] ptname, String[] disease, int[] docid) {
