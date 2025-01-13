@@ -356,7 +356,9 @@ public static void delete(int[] ptid, String[] ptname, String[] disease, int[] d
     disease = newDisease;
     docid = newDocid;
     
-    System.out.println("Patient record deleted successfully.");
+    System.out.println("Patient deleted successfully. Updated list:");
+    for (int i = 0; i < ptid.length; i++) {
+        System.out.printf("%d. %s (ID: %d)\n", i + 1, ptname[i], ptid[i]);
 }
     
     
