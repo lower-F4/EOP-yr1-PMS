@@ -94,10 +94,8 @@ public class PMSMain {
         String[] passData = new String[100]; 
         Scanner query = new Scanner(System.in); 
 
-        System.out.print("PMS>"); 
+        //System.out.print("PMS>"); 
         
-       
-
         System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
         System.out.print("What do you wish to do: ");
         input = query.nextInt();
@@ -173,7 +171,7 @@ public class PMSMain {
 
     //TODO INSERT(); Harits' 
 
-    public static String insert(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+    public static String[] insert(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         Scanner input = new Scanner(System.in);
     
         // Prompt for new patient details
@@ -230,15 +228,16 @@ public class PMSMain {
     System.out.println("New patient details added successfully.");
     System.out.println( insertedPatientList); // Return the updated patient list
 
-        String[] passData = new String[ptid.length];
-        for (int i = 0; i < ptid.length; i++) {
-            passData[i] = String.join("\t",
-                    String.valueOf(ptid[i]),
-                    ptname[i],
-                    disease[i],
-                    String.valueOf(docid[i]));
+    //return to query()
+    String[] passData = new String[ptid.length];
+    for (int i = 0; i < ptid.length; i++) {
+        passData[i] = String.join("\t",
+                String.valueOf(ptid[i]),
+                ptname[i],
+                disease[i],
+                String.valueOf(docid[i]));
         }
-        return passData;
+    return passData;
 }
 
 
@@ -301,7 +300,7 @@ public class PMSMain {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } 
-        //TODO:how do I pass it back to main?
+        //pass back to query()
         String[] passData = new String[ptid.length];
         for (int i = 0; i < ptid.length; i++) {
             passData[i] = String.join("\t",
