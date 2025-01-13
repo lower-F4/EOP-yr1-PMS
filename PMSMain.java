@@ -71,7 +71,7 @@ public class PMSMain {
     */
     public static void query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
-         
+          int input;
         Scanner query = new Scanner(System.in); 
 
         System.out.print("PMS>"); 
@@ -80,7 +80,7 @@ public class PMSMain {
 
         System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
         System.out.print("What do you wish to do: ");
-        int input;
+        input = query.nextInt();
 
         switch (input) {
             case 1: String insertedpatientlist = insert(ptid, ptname, disease, docid);
