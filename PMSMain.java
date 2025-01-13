@@ -253,4 +253,16 @@ public class PMSMain {
 
 
     }
+    public static String[] yourMethod(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+String[] passData = new String[ptid.length];
+        for (int i = 0; i < ptid.length; i++) {
+            passData[i] = String.join("\t",
+                    String.valueOf(ptid[i]),
+                    ptname[i],
+                    disease[i],
+                    String.valueOf(docid[i]));
+        }
+        return passData;
+}
+    
 }
