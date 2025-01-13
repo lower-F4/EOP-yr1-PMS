@@ -23,6 +23,8 @@ public class PMSMain {
         String[] ptname = new String[100]; 
         String[] disease = new String[100];  
         int[] docid = new int[100];
+
+        String[] passData = new String[100]; 
            
         /*-------------------------TEST DATA--------------------------------------
         int[] ptid = {
@@ -45,7 +47,20 @@ public class PMSMain {
         
         greetings();
         while(true) {
-            query(ptid, ptname, disease, docid); 
+            passData = query(ptid, ptname, disease, docid); 
+
+            for (int i = 0; i < passData.length; i++) {
+                if(passData[i] == null) {
+                    break; 
+                }
+                String[] row = passData[i].split("\t");
+                if (row.length == 4) {
+                    ptid[i] = Integer.parseInt(row[0]);
+                    ptname[i] = row[1];
+                    disease[i] = row[2];
+                    docid[i] = Integer.parseInt(row[3]);
+                }
+            }
         }
 
     }
@@ -73,17 +88,17 @@ public class PMSMain {
     -  to ask for user the option of each operation methods.
     - redirect user option into a specific method.
     */
-    public static void query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+    public static String[] query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
-        String input; 
+        int input; 
+        String[] passData = new String[100]; 
         Scanner query = new Scanner(System.in); 
 
         System.out.print("PMS>"); 
-        input = query.nextLine(); 
-        input = input.toLowerCase(); 
+        input = query.nextInt();  
 
         System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
-        System.out.print("What do you wish to do: ")
+        System.out.print("What do you wish to do: ");
         
 
         switch (input) {
@@ -91,14 +106,14 @@ public class PMSMain {
                 System.out.println(insertedpatientlist);
                 
                 break;
-            case 2: update();
+            case 2: //update();
 
                 break; 
             case 3: 
                 view(ptid, ptname, disease, docid);
                 break; 
 
-            case 4: delete();
+            case 4: //delete();
         
                 break; 
             case 5:
@@ -106,9 +121,8 @@ public class PMSMain {
                 break;
             case 6:
                 try {
-                    read(ptid, ptname, disease, docid);
+                    passData = read(ptid, ptname, disease, docid);
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } 
                 break;
@@ -119,6 +133,7 @@ public class PMSMain {
                 System.out.println("Please enter a valid command.");
                 break;
         }
+        return passData; 
     }
 
 
@@ -141,12 +156,15 @@ public class PMSMain {
         System.out.println("Patient ID    Patient Name    Disease    Doctor ID");
         System.out.println("---------------------------------------------------");
         
-        if (viewname > 0 && viewname != (ptid.length+1))
+        if (viewname > 0 && viewname != (ptid.length+1)) {
             int loopname = viewname - 1;
+        
             System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
-        else if (viewname == (ptid.length+1))
+        }
+        else if (viewname == (ptid.length+1)) { 
             for (int i = 0 ; i < ptid.length ; i++)
                     System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[i],ptname[i],disease[i],docid[i]);
+        }
     }
 
     //TODO INSERT(); Harits' 
@@ -177,9 +195,9 @@ public class PMSMain {
 
         //to copy old data into the new array
 
-        for (int i = 0; ptid.length; i++)
+        for (int i = 0; i < ptid.length; i++)
         {
-            newptIdArray[i] = ptid[i];
+            newPtIdArray[i] = ptid[i];
             newPtNameArray[i] = ptname[i] ;
             newDiseaseArray[i] = disease[i];
             newDocIdArray[i] = docid[i];
@@ -238,7 +256,7 @@ public class PMSMain {
     }
 
 
-    public static void read(int[] ptid, String[] ptname, String[] disease, int[] docid) throws IOException {
+    public static String[] read(int[] ptid, String[] ptname, String[] disease, int[] docid) throws IOException {
 
 
         //Read is void method, it will write it to the master variable.
@@ -264,9 +282,20 @@ public class PMSMain {
             System.out.println("Read Operation Successful."); 
 
             readdata.close();
+
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } 
         //TODO:how do I pass it back to main?
+        String[] passData = new String[ptid.length];
+        for (int i = 0; i < ptid.length; i++) {
+            passData[i] = String.join("\t",
+                    String.valueOf(ptid[i]),
+                    ptname[i],
+                    disease[i],
+                    String.valueOf(docid[i]));
+        }
+        return passData;
     }
 }
