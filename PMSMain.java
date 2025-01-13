@@ -78,6 +78,10 @@ public class PMSMain {
         input = query.nextLine(); 
         input = input.toLowerCase(); 
 
+        System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
+        System.out.print("What do you wish to do: ")
+        
+
         switch (input) {
             case 1: String insertedpatientlist = insert(ptid, ptname, disease, docid);
                 System.out.println(insertedpatientlist);
