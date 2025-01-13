@@ -65,10 +65,7 @@ public class PMSMain {
 
     }
 
-    //TODO greetings():
-    /*
-    - Make a stands out ASCII art upon program startup.
-    */
+    //greetings
     public static void greetings() {
         System.out.printf(" _____     _   _         _      _____                                   _   \r\n" + //
                         "|  _  |___| |_|_|___ ___| |_   |     |___ ___ ___ ___ ___ _____ ___ ___| |_ \r\n" + //
@@ -83,11 +80,7 @@ public class PMSMain {
                         "      |___|                                                                 \n");
     }
 
-    //TODO query():
-    /*
-    -  to ask for user the option of each operation methods.
-    - redirect user option into a specific method.
-    */
+    //query
     public static String[] query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
         int input; 
@@ -222,6 +215,10 @@ public class PMSMain {
     insertedPatientList += "Patient ID    Patient Name    Disease    Doctor ID\n";
     insertedPatientList += "---------------------------------------------------\n";
     for (int i = 0; i < ptid.length; i++) {
+        //Farees added
+        if(ptname[i] == null) {
+            break;
+        }
         insertedPatientList += String.format("%-10d    %-13s    %-8s    %-9d\n", ptid[i], ptname[i], disease[i], docid[i]);
     }
 
@@ -237,15 +234,14 @@ public class PMSMain {
                 disease[i],
                 String.valueOf(docid[i]));
         }
+        //index out of bound
     return passData;
 }
 
 
 
 
-    //TODO UPDATE(): 
 
-    //TODO DELETE(); 
 
 
     public static void save(int[] ptid, String[] ptname, String[] disease, int[] docid) {
