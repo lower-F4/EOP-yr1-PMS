@@ -100,16 +100,12 @@ public class PMSMain {
         System.out.print("What do you wish to do: ");
         input = query.nextInt();
 
-        
-        System.out.print("What do you wish to do: ");
-        
-
         switch (input) {
             case 1: passData = insert(ptid, ptname, disease, docid);
                 
                 break;
             case 2: //update();
-
+                update(ptid, ptname, disease, docid);
                 break; 
             case 3: 
                 view(ptid, ptname, disease, docid);
@@ -155,17 +151,15 @@ public class PMSMain {
         
         int viewname = input.nextInt();
 
-        System.out.println("Patient ID    Patient Name    Disease    Doctor ID");
-        System.out.println("---------------------------------------------------");
+        System.out.println("Patient ID    Patient Name    Disease                Doctor ID");
+        System.out.println("--------------------------------------------------------------");
         
-        if (viewname > 0 && viewname != (ptid.length+1)) {
+        if (viewname > 0 && viewname != (ptid.length+1)){
             int loopname = viewname - 1;
-        
-            System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
-        }
-        else if (viewname == (ptid.length+1)) { 
+            System.out.printf("%-10d    %-12s    %-20s    %-9d\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
+        } else if (viewname == (ptid.length+1)){
             for (int i = 0 ; i < ptid.length ; i++)
-                    System.out.printf("%-10d    %-13s    %-8s    %-9d\n", ptid[i],ptname[i],disease[i],docid[i]);
+                    System.out.printf("%-10d    %-12s    %-20s    %-9d\n", ptid[i],ptname[i],disease[i],docid[i]);
         }
     }
 
@@ -243,8 +237,81 @@ public class PMSMain {
 
 
 
-    //TODO UPDATE(): 
-
+    //TODO UPDATE();
+    public static void update(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+        Scanner input = new Scanner(System.in);
+    
+        // Display all patients' IDs and names
+        System.out.println("Select the patient you want to update:");
+        for (int i = 0; i < ptid.length; i++) {
+            System.out.println(ptid[i] + " - " + ptname[i]);
+        }
+    
+        // Prompt the user to enter the patient ID
+        System.out.print("Enter the Patient ID: ");
+        int id = input.nextInt();
+    
+        // Find the index of the patient ID
+        int index = -1;
+        for (int i = 0; i < ptid.length; i++) {
+            if (ptid[i] == id) {
+                index = i;
+                break;
+            }
+        }
+    
+        // If the patient ID is not found
+        if (index == -1) {
+            System.out.println("Patient ID not found. Returning to the main menu.");
+            return;
+        }
+    
+        // Display current information of the patient
+        System.out.println("Current information of Patient ID " + id + ":");
+        System.out.println("1. Patient Name: " + ptname[index]);
+        System.out.println("2. Disease: " + disease[index]);
+        System.out.println("3. Doctor ID: " + docid[index]);
+        System.out.println();
+        
+        // Prompt the user to select which field to update
+        System.out.println("What do you want to update?");
+        System.out.println("1. Patient Name");
+        System.out.println("2. Disease");
+        System.out.println("3. Doctor ID");
+        System.out.print("Enter your choice (1-3): ");
+        int choice = input.nextInt();
+        System.out.println();
+        // Update the selected field
+        input.nextLine(); // Consume the newline character
+        switch (choice) {
+            case 1:
+                System.out.print("Enter the new Patient Name: ");
+                ptname[index] = input.nextLine();
+                break;
+            case 2:
+                System.out.print("Enter the new Disease: ");
+                disease[index] = input.nextLine();
+                break;
+            case 3:
+                System.out.print("Enter the new Doctor ID: ");
+                docid[index] = input.nextInt();
+                break;
+            default:
+                System.out.println("Invalid choice. No updates were made.");
+                return;
+        }
+    
+        // Display the updated information
+        System.out.println();
+        System.out.println("Updated information of Patient ID " + id + ":");
+        System.out.printf("Patient Name: %s\n", ptname[index]);
+        System.out.printf("Disease: %s\n", disease[index]);
+        System.out.printf("Doctor ID: %d\n", docid[index]);
+        System.out.println();
+    
+        System.out.println("Update successful! Returning to the main menu.\n");
+    }
+    
     //TODO DELETE(); 
 
 
