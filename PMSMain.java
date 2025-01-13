@@ -82,8 +82,10 @@ public class PMSMain {
         System.out.print("What do you wish to do: ");
         input = query.nextInt();
 
+        String[] passData = new String[100];
+        
         switch (input) {
-            case 1: String insertedpatientlist = insert(ptid, ptname, disease, docid);
+            case 1: passData = insert(ptid, ptname, disease, docid);
                 
                 break;
             case 2: update();
@@ -202,6 +204,16 @@ public class PMSMain {
 
     System.out.println("New patient details added successfully.");
     System.out.println( insertedPatientList); // Return the updated patient list
+
+        String[] passData = new String[ptid.length];
+        for (int i = 0; i < ptid.length; i++) {
+            passData[i] = String.join("\t",
+                    String.valueOf(ptid[i]),
+                    ptname[i],
+                    disease[i],
+                    String.valueOf(docid[i]));
+        }
+        return passData;
 }
 
 
@@ -253,17 +265,6 @@ public class PMSMain {
 
 
     }
-    public static String[] yourMethod(int[] ptid, String[] ptname, String[] disease, int[] docid) {
-String[] passData = new String[ptid.length];
-        for (int i = 0; i < ptid.length; i++) {
-            passData[i] = String.join("\t",
-                    String.valueOf(ptid[i]),
-                    ptname[i],
-                    disease[i],
-                    String.valueOf(docid[i]));
-        }
-        return passData;
-}
 
     //choose what patient you want to delete
     
