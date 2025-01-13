@@ -95,15 +95,19 @@ public class PMSMain {
         Scanner query = new Scanner(System.in); 
 
         System.out.print("PMS>"); 
-        input = query.nextInt();  
+        
+       
 
         System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
+        System.out.print("What do you wish to do: ");
+        input = query.nextInt();
+
+        
         System.out.print("What do you wish to do: ");
         
 
         switch (input) {
-            case 1: String insertedpatientlist = insert(ptid, ptname, disease, docid);
-                System.out.println(insertedpatientlist);
+            case 1: passData = insert(ptid, ptname, disease, docid);
                 
                 break;
             case 2: //update();
@@ -113,7 +117,7 @@ public class PMSMain {
                 view(ptid, ptname, disease, docid);
                 break; 
 
-            case 4: //delete();
+            case 4: delete(ptid, ptname, disease, docid);
         
                 break; 
             case 5:
@@ -224,7 +228,17 @@ public class PMSMain {
     }
 
     System.out.println("New patient details added successfully.");
-    return insertedPatientList; // Return the updated patient list
+    System.out.println( insertedPatientList); // Return the updated patient list
+
+        String[] passData = new String[ptid.length];
+        for (int i = 0; i < ptid.length; i++) {
+            passData[i] = String.join("\t",
+                    String.valueOf(ptid[i]),
+                    ptname[i],
+                    disease[i],
+                    String.valueOf(docid[i]));
+        }
+        return passData;
 }
 
 
@@ -298,4 +312,53 @@ public class PMSMain {
         }
         return passData;
     }
+
+    //choose what patient you want to delete
+    
+public static void delete(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+    Scanner input = new Scanner(System.in);
+    
+    // Display current patients
+    System.out.println("Current Patients:");
+    for (int i = 0; i < ptid.length; i++) {
+        System.out.printf("%d. %s (ID: %d)\n", i + 1, ptname[i], ptid[i]);
+    }
+    
+    // Ask the user to select a patient to delete
+    System.out.print("Enter the index of the patient to delete (1-" + ptid.length + "): ");
+    int index = input.nextInt() - 1; // Convert to 0-based index
+    
+    // Validate input
+    if (index < 0 || index >= ptid.length) {
+        System.out.println("Invalid index. No changes made.");
+        return;
+    }
+    
+    // Create new arrays with one less element
+    int[] newPtid = new int[ptid.length - 1];
+    String[] newPtname = new String[ptname.length - 1];
+    String[] newDisease = new String[disease.length - 1];
+    int[] newDocid = new int[docid.length - 1];
+    
+    // Copy all elements except the one to be deleted
+    for (int i = 0, j = 0; i < ptid.length; i++) {
+        if (i != index) { // Skip the deleted patient
+            newPtid[j] = ptid[i];
+            newPtname[j] = ptname[i];
+            newDisease[j] = disease[i];
+            newDocid[j] = docid[i];
+            j++;
+        }
+    }
+    
+    // Update the original arrays
+    ptid = newPtid;
+    ptname = newPtname;
+    disease = newDisease;
+    docid = newDocid;
+    
+    System.out.println("Patient record deleted successfully.");
+}
+    
+    
 }
