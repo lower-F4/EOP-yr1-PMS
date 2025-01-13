@@ -19,8 +19,12 @@ public class PMSMain {
         - The array which represent the table column.
         - 
         */
-
-        //-------------------------TEST DATA--------------------------------------
+        int[] ptid = new int[100];  
+        String[] ptname = new String[100]; 
+        String[] disease = new String[100];  
+        int[] docid = new int[100];
+           
+        /*-------------------------TEST DATA--------------------------------------
         int[] ptid = {
             100, 101, 102,
             103, 104, 105
@@ -37,7 +41,7 @@ public class PMSMain {
             1000, 1001, 1002, 
             1003, 1004, 1005
         }; 
-        //-------------------------TEST DATA--------------------------------------
+        *///-------------------------TEST DATA--------------------------------------
         
         greetings();
         while(true) {
@@ -97,7 +101,7 @@ public class PMSMain {
                 break;
             case "read":
                 try {
-                    read();
+                    read(ptid, ptname, disease, docid);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -140,13 +144,7 @@ public class PMSMain {
                     System.out.printf("%-10f    %-11s    %-7s    %-9f\n", ptid[i],ptname[i],disease[i],docid[i]);
     }
 
-    //TODO INSERT(); 
 
-    //TODO UPDATE(): 
-
-    //TODO DELETE(); 
-
-    //TODO SAVE(); 
 
     public static void save(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
@@ -168,24 +166,36 @@ public class PMSMain {
         
     }
 
-    //TODO READ(); 
 
-    public static void read() throws IOException {
+    public static void read(int[] ptid, String[] ptname, String[] disease, int[] docid) throws IOException {
 
-        //Using bufferedReader
+
+        //Read is void method, it will write it to the master variable.
         try {
             BufferedReader readdata = new BufferedReader(new FileReader("Data.txt"));
-            //TODO while loop reading data, categorize each into array.
-            String st = readdata.readLine();
+            
+            String line; 
+            int index = 0; 
+            while ((line = readdata.readLine()) != null) {
+                String[] row = line.split("\t");
+                if (row.length == 4) { // Ensure each row has 4 elements
+                    ptid[index] = Integer.parseInt(row[0]);
+                    //System.out.println("ptid["+index+"]: "+ptid[index]); 
+                    ptname[index] = row[1];
+                    //System.out.println("ptname["+index+"]: "+ptname[index]);
+                    disease[index] = row[2];
+                    //System.out.println("disease["+index+"]: "+disease[index]);
+                    docid[index] = Integer.parseInt(row[3]);
+                    //System.out.println("docid["+index+"]: "+docid[index]);
+                }
+            index++; 
+            }
+            System.out.println("Read Operation Successful."); 
 
-            System.out.println(st); 
-
+            readdata.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } 
-
-        //using scanner
-
-
+        //TODO:how do I pass it back to main?
     }
 }
