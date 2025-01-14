@@ -1,6 +1,6 @@
 /*
  * Patient Management System 
- * by Group 5, BICS 1301, Year 1 Sem 1
+ * by Group 5, BICS 1301, Year 1 Sem 1 2024/2025 Session
 */
 import java.util.Scanner;
 import java.lang.System; 
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class PMSMain {
     public static void main(String[] args) {
-        //TODO main:
+        //main:
         /*
         - While loop that include a user input to exit/stay in program.
         - The array which represent the table column.
@@ -26,24 +26,6 @@ public class PMSMain {
 
         String[] passData = new String[ptid.length]; 
            
-        /*-------------------------TEST DATA--------------------------------------
-        int[] ptid = {
-            100, 101, 102,
-            103, 104, 105
-        }; 
-        String[] ptname = {
-            "Saiful", "Ahmad", "Hanif",
-            "Syamsol", "Badrul", "Qistina"
-        }; 
-        String[] disease = {
-            "Diabetes", "High blood pressure", "Heart attack",
-            "Heart broken", "Broken leg", "Accident"
-        }; 
-        int[] docid = {
-            1000, 1001, 1002, 
-            1003, 1004, 1005
-        }; 
-        *///-------------------------TEST DATA--------------------------------------
         
         greetings();
         while(true) {
@@ -51,25 +33,27 @@ public class PMSMain {
 
             //create a new array?
             for (int i = 0; i < passData.length; i++) {
-                /*debug*/System.out.println(passData[i]);
+                /*debug : System.out.println(passData[i]);*/
                 if(passData[i] == null) {
                     //triggered by view()
-                    /*debug*/System.out.println("Break");
+                    /*Debug:System.out.println("Break");*/
                     break; 
                 }
                 String[] row = passData[i].split("\t");
                 if (row.length == 4) {
-                    //debug
                     if(ptid[i] == 0) {
                         break; 
                     }
+                    /*
+                    Debug:
                     System.out.println("Updated Data with size: " + ptid.length);
                     System.out.println("PTID: " + row[0]);
                     System.out.println("PTNAME:"+ row[1]);
                     System.out.println("DISEASE:"+ row[2]);
                     System.out.println("DOCID:"+ row[3]);
-                    //debug
-                    ptid[i] = Integer.parseInt(row[0]); //out of bound
+                    */
+                    
+                    ptid[i] = Integer.parseInt(row[0]); 
                     ptname[i] = row[1];
                     disease[i] = row[2];
                     docid[i] = Integer.parseInt(row[3]);
@@ -79,7 +63,7 @@ public class PMSMain {
 
     }
 
-    //greetings
+    //greetings() by Muhammad Farees
     public static void greetings() {
         System.out.printf(" _____     _   _         _      _____                                   _   \r\n" + //
                         "|  _  |___| |_|_|___ ___| |_   |     |___ ___ ___ ___ ___ _____ ___ ___| |_ \r\n" + //
@@ -94,7 +78,7 @@ public class PMSMain {
                         "      |___|                                                                 \n");
     }
 
-    //query
+    //query() by Harits
     public static String[] query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
         int input; 
@@ -108,7 +92,7 @@ public class PMSMain {
         input = query.nextInt();
 
         switch (input) {
-            case 1: passData = insert(ptid, ptname, disease, docid);
+            case 1: insert(ptid, ptname, disease, docid);
                 
                 break;
             case 2: //update();
@@ -143,7 +127,7 @@ public class PMSMain {
 
 
 
-    //view():
+    //view() by Aiman Salehuddin
     /*
     - to display the detail of each a certain/ whole patient table.
     */
@@ -178,9 +162,9 @@ public class PMSMain {
         }
     }
 
-    //TODO INSERT(); Harits' 
+    //insert() by Harits
 
-    public static String[] insert(int[] ptid, String[] ptname, String[] disease, int[] docid) {
+    public static void insert(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         Scanner input = new Scanner(System.in);
     
         // Prompt for new patient details
@@ -214,11 +198,24 @@ public class PMSMain {
             newDocIdArray[i] = docid[i];
         }
         
-        // Add new data to the last position of the arrays
+
+    // Add new data to the last position of the arrays
+    /* 
     newPtIdArray[ptid.length] = newPtId;
     newPtNameArray[ptname.length] = newPtName;
     newDiseaseArray[disease.length] = newDisease;
     newDocIdArray[docid.length] = newDocId;
+    */
+
+    for(int i = 0;i < ptid.length;i++) {
+        if(newPtIdArray[i] == 0) {
+            newPtIdArray[i] = newPtId;
+            newPtNameArray[i] = newPtName;
+            newDiseaseArray[i] = newDisease;
+            newDocIdArray[i] = newDocId;
+            break;
+        }
+    }
 
     // Assign the new arrays back to the existing variables
     ptid = newPtIdArray;
@@ -231,8 +228,7 @@ public class PMSMain {
     insertedPatientList += "Patient ID    Patient Name    Disease    Doctor ID\n";
     insertedPatientList += "---------------------------------------------------\n";
     for (int i = 0; i < ptid.length; i++) {
-        //Farees added
-        if(ptname[i] == null) {
+        if(ptid[i] == 0) {
             break;
         }
         insertedPatientList += String.format("%-10d    %-13s    %-8s    %-9d\n", ptid[i], ptname[i], disease[i], docid[i]);
@@ -240,32 +236,24 @@ public class PMSMain {
 
     System.out.println("New patient details added successfully.");
     System.out.println( insertedPatientList); // Return the updated patient list
-    //TODO index out of bound after printing
 
-    //return to query()
-    //String[] passData = new String[ptid.length];
-    String[] passData = new String[ptid.length];
-    for (int i = 0; i < ptid.length; i++) {
-        passData[i] = String.join("\t",
-                String.valueOf(ptid[i]),
-                ptname[i],
-                disease[i],
-                String.valueOf(docid[i]));
-        }
-        //index out of bound
-    return passData;
+    save(ptid, ptname, disease, docid);
+    System.out.println("Please do read operation to make changes.");   
 }
 
 
 
 
-    //TODO UPDATE();
+    //update() by Aiman Salehuddin
     public static void update(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         Scanner input = new Scanner(System.in);
     
         // Display all patients' IDs and names
         System.out.println("Select the patient you want to update:");
         for (int i = 0; i < ptid.length; i++) {
+            if(ptid[i] == 0) {
+                break;
+            }
             System.out.println(ptid[i] + " - " + ptname[i]);
         }
     
@@ -335,13 +323,20 @@ public class PMSMain {
     }
     
 
-
+    //save() by Muhammad Farees
     public static void save(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
         try {
             BufferedWriter savedata = new BufferedWriter(new FileWriter("Data.txt"));
 
             for(int i = 0;i < ptid.length; i++) {
+                if(ptid[i] == 0) {
+                    break;
+                }
+                
+                if(ptid[i] == -1) { //sort the already deleted.
+                    continue; 
+                }
                 savedata.write(ptid[i] + "\t");
                 savedata.write(ptname[i] + "\t"); 
                 savedata.write(disease[i] + "\t"); 
@@ -356,7 +351,7 @@ public class PMSMain {
         
     }
 
-
+    //read() by Muhammad Farees
     public static String[] read(int[] ptid, String[] ptname, String[] disease, int[] docid) throws IOException {
 
 
@@ -370,13 +365,9 @@ public class PMSMain {
                 String[] row = line.split("\t");
                 if (row.length == 4) { // Ensure each row has 4 elements
                     ptid[index] = Integer.parseInt(row[0]);
-                    //System.out.println("ptid["+index+"]: "+ptid[index]); 
                     ptname[index] = row[1];
-                    //System.out.println("ptname["+index+"]: "+ptname[index]);
                     disease[index] = row[2];
-                    //System.out.println("disease["+index+"]: "+disease[index]);
                     docid[index] = Integer.parseInt(row[3]);
-                    //System.out.println("docid["+index+"]: "+docid[index]);
                 }
             index++; 
             }
@@ -401,7 +392,7 @@ public class PMSMain {
     }
 
     //choose what patient you want to delete
-    
+//delete() by Haddif Asjad
 public static void delete(int[] ptid, String[] ptname, String[] disease, int[] docid) {
     Scanner input = new Scanner(System.in);
 
@@ -439,6 +430,7 @@ public static void delete(int[] ptid, String[] ptname, String[] disease, int[] d
         }
         if (ptid[i] != -1) { // Skip deleted entries
             System.out.printf("%d. %s (ID: %d)\n", i + 1, ptname[i], ptid[i]);
-            }
+        }
+    }
 }   
 }
