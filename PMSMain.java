@@ -24,7 +24,7 @@ public class PMSMain {
         String[] disease = new String[100];  
         int[] docid = new int[100];
 
-        String[] passData = new String[100]; 
+        String[] passData = new String[ptid.length]; 
            
         /*-------------------------TEST DATA--------------------------------------
         int[] ptid = {
@@ -49,13 +49,27 @@ public class PMSMain {
         while(true) {
             passData = query(ptid, ptname, disease, docid); 
 
+            //create a new array?
             for (int i = 0; i < passData.length; i++) {
+                /*debug*/System.out.println(passData[i]);
                 if(passData[i] == null) {
+                    //triggered by view()
+                    /*debug*/System.out.println("Break");
                     break; 
                 }
                 String[] row = passData[i].split("\t");
                 if (row.length == 4) {
-                    ptid[i] = Integer.parseInt(row[0]);
+                    //debug
+                    if(ptid[i] == 0) {
+                        break; 
+                    }
+                    System.out.println("Updated Data with size: " + ptid.length);
+                    System.out.println("PTID: " + row[0]);
+                    System.out.println("PTNAME:"+ row[1]);
+                    System.out.println("DISEASE:"+ row[2]);
+                    System.out.println("DOCID:"+ row[3]);
+                    //debug
+                    ptid[i] = Integer.parseInt(row[0]); //out of bound
                     ptname[i] = row[1];
                     disease[i] = row[2];
                     docid[i] = Integer.parseInt(row[3]);
@@ -84,10 +98,10 @@ public class PMSMain {
     public static String[] query(int[] ptid, String[] ptname, String[] disease, int[] docid) {
         
         int input; 
-        String[] passData = new String[100]; 
+        String[] passData = new String[ptid.length]; 
         Scanner query = new Scanner(System.in); 
 
-        //System.out.print("PMS>"); 
+
         
         System.out.println("Patient Management System:\n1. Insert\n2. Update\n3. View\n4. Delete\n5. Save\n6. Read\n7. Exit");
         System.out.print("What do you wish to do: ");
@@ -129,7 +143,7 @@ public class PMSMain {
 
 
 
-    //TODO view():
+    //view():
     /*
     - to display the detail of each a certain/ whole patient table.
     */
@@ -138,6 +152,10 @@ public class PMSMain {
         System.out.println("Please key-in which patient's information that you wish to view: \n");
 
         for (int i = 0 ; i<ptid.length ; i++){
+            //Farees added
+            if(ptid[i] == 0) {
+                break;
+            }
             System.out.println( (i+1) + ". " + ptname[i]);
         }
         System.out.println( (ptid.length+1) + ". " + "VIEW ALL PATIENTS");
@@ -151,8 +169,12 @@ public class PMSMain {
             int loopname = viewname - 1;
             System.out.printf("%-10d    %-12s    %-20s    %-9d\n", ptid[loopname],ptname[loopname],disease[loopname],docid[loopname]);
         } else if (viewname == (ptid.length+1)){
-            for (int i = 0 ; i < ptid.length ; i++)
+            for (int i = 0 ; i < ptid.length ; i++) {
+                    if(ptid[i] == 0) {
+                        break;
+                    }
                     System.out.printf("%-10d    %-12s    %-20s    %-9d\n", ptid[i],ptname[i],disease[i],docid[i]);
+            }
         }
     }
 
@@ -218,8 +240,10 @@ public class PMSMain {
 
     System.out.println("New patient details added successfully.");
     System.out.println( insertedPatientList); // Return the updated patient list
+    //TODO index out of bound after printing
 
     //return to query()
+    //String[] passData = new String[ptid.length];
     String[] passData = new String[ptid.length];
     for (int i = 0; i < ptid.length; i++) {
         passData[i] = String.join("\t",
@@ -310,7 +334,6 @@ public class PMSMain {
         System.out.println("Update successful! Returning to the main menu.\n");
     }
     
-    //TODO DELETE(); 
 
 
     public static void save(int[] ptid, String[] ptname, String[] disease, int[] docid) {
@@ -385,6 +408,9 @@ public static void delete(int[] ptid, String[] ptname, String[] disease, int[] d
     // Display current patients
     System.out.println("Current Patients:");
     for (int i = 0; i < ptid.length; i++) {
+        if(ptid[i] == 0) {
+            break;
+        }
         System.out.printf("%d. %s (ID: %d)\n", i + 1, ptname[i], ptid[i]);
     }
     
@@ -423,8 +449,10 @@ public static void delete(int[] ptid, String[] ptname, String[] disease, int[] d
     
     System.out.println("Patient deleted successfully. Updated list:");
     for (int i = 0; i < ptid.length; i++) {
+        if(ptid[i] == 0) {
+            break;
+        }
         System.out.printf("%d. %s (ID: %d)\n", i + 1, ptname[i], ptid[i]);
-}
-    
-    
+    }
+}   
 }
